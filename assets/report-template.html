@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{REPORT_TITLE}}</title>
+  <style>
+    :root{--bg:#f4f7fb;--surface:#fff;--ink:#172033;--muted:#667085;--line:#dce4ef;--fact:#0f766e;--infer:#b7791f;--suggest:#7c3aed;--unknown:#64748b;--danger:#c2413b;--accent:#315efb;--shadow:0 16px 45px #1720330d}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+    a{color:var(--accent)}button{font:inherit}.shell{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1500px;margin:auto}.toc{position:sticky;top:0;height:100vh;padding:28px 20px;border-right:1px solid var(--line);background:#f9fbfe;overflow:auto}.toc strong{display:block;font-size:18px;margin-bottom:14px}.toc a{display:block;padding:8px 10px;border-radius:9px;color:var(--muted);text-decoration:none}.toc a:hover{background:#eaf0ff;color:var(--accent)}main{min-width:0;padding:42px clamp(20px,4vw,64px) 80px}
+    .hero{padding:34px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(140deg,#fff,#edf3ff);box-shadow:var(--shadow)}.eyebrow{color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:.25em 0;font-size:clamp(32px,5vw,58px);line-height:1.08}.muted{color:var(--muted)}
+    .meta,.legend,.filters,.cards{display:flex;flex-wrap:wrap;gap:10px}.meta span,.legend span{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff}.dot{display:inline-block;width:9px;height:9px;margin-right:6px;border-radius:50%}.fact-dot{background:var(--fact)}.infer-dot{background:var(--infer)}.suggest-dot{background:var(--suggest)}.unknown-dot{background:var(--unknown)}
+    section{scroll-margin-top:20px;margin-top:36px;padding:28px;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:var(--shadow)}h2{margin-top:0;font-size:27px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.card{padding:18px;border:1px solid var(--line);border-radius:14px;background:#fff}.card b{display:block;font-size:24px}
+    .filters{margin:16px 0}.filters button{padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer}.filters button[aria-pressed="true"]{border-color:var(--accent);background:#edf3ff;color:var(--accent)}
+    .table-wrap,.diagram{max-width:100%;overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:860px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f7f9fc}.fact{border-left:4px solid var(--fact)}.infer{border-left:4px dashed var(--infer)}.suggest{border-left:4px dotted var(--suggest)}.unknown{border-left:4px dashed var(--unknown)}.conflict{border-left:4px solid var(--danger)}
+    .flow{display:grid;grid-template-columns:repeat(3,minmax(250px,1fr));gap:14px;min-width:900px}.lane{padding:14px;border:1px solid var(--line);border-radius:14px;background:#f8fafc}.node{margin-top:12px;padding:14px;border:2px solid var(--fact);border-radius:12px;background:#fff}.node.infer{border-style:dashed;border-color:var(--infer)}.node.unknown{border-style:dashed;border-color:var(--unknown)}.decision{width:150px;min-height:150px;margin:30px auto;display:grid;place-items:center;text-align:center;transform:rotate(45deg);border-radius:12px}.decision>*{transform:rotate(-45deg)}
+    .evidence{scroll-margin-top:20px}.evidence h3{margin-bottom:4px}.shot{max-width:100%;height:auto;border:1px solid var(--line);border-radius:12px}code,pre{font-family:"SFMono-Regular",Consolas,monospace}pre{overflow:auto;padding:16px;border-radius:12px;background:#101827;color:#e5edff;white-space:pre-wrap}
+    [hidden]{display:none!important}@media(max-width:900px){.shell{display:block}.toc{position:static;width:auto;height:auto;border-right:0;border-bottom:1px solid var(--line)}main{padding:24px 14px 60px}section,.hero{padding:20px}}@media print{body{background:#fff}.shell{display:block}.toc,.filters{display:none}main{padding:0}.hero,section{box-shadow:none;break-inside:avoid}.table-wrap,.diagram{overflow:visible}a{color:inherit;text-decoration:none}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="toc" aria-label="报告目录">
+      <strong>{{REPORT_TITLE}}</strong>
+      <a href="#summary">执行摘要</a>
+      <a href="#scope">范围与缺口</a>
+      <a href="#main">核心报告</a>
+      <a href="#evidence">证据目录</a>
+    </nav>
+    <main>
+      <header class="hero">
+        <div class="eyebrow">Evidence-backed product decomposition</div>
+        <h1>{{REPORT_TITLE}}</h1>
+        <p>{{REPORT_SUBTITLE}}</p>
+        <div class="meta"><span>目标：{{TARGET_URL}}</span><span>模式：{{MODE}}</span><span>查看日期：{{AUDIT_DATE}}</span></div>
+        <div class="legend" aria-label="证据图例">
+          <span><i class="dot fact-dot"></i>页面事实 / 已确认</span>
+          <span><i class="dot infer-dot"></i>合理推断</span>
+          <span><i class="dot suggest-dot"></i>建议设计</span>
+          <span><i class="dot unknown-dot"></i>尚未确认 / 未知</span>
+        </div>
+      </header>
+
+      <section id="summary"><h2>执行摘要</h2><p>{{EXECUTIVE_SUMMARY}}</p><div class="cards">{{SUMMARY_CARDS}}</div></section>
+      <section id="scope"><h2>查看范围与证据缺口</h2><p>{{SCOPE}}</p><div class="card unknown"><strong>尚未确认 / 未知</strong><p>{{EVIDENCE_GAPS}}</p></div></section>
+      <section id="main">
+        <h2>核心报告</h2>
+        <div class="filters" aria-label="证据筛选">
+          <button type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button type="button" data-filter="fact" aria-pressed="false">已确认</button>
+          <button type="button" data-filter="infer" aria-pressed="false">推断</button>
+          <button type="button" data-filter="suggest" aria-pressed="false">建议</button>
+          <button type="button" data-filter="unknown" aria-pressed="false">未知</button>
+        </div>
+        {{MAIN_CONTENT}}
+        <div class="diagram" aria-label="三泳道示例结构">
+          <div class="flow">
+            <div class="lane"><strong>用户</strong>{{USER_LANE}}</div>
+            <div class="lane"><strong>产品界面</strong>{{INTERFACE_LANE}}</div>
+            <div class="lane"><strong>系统结果</strong>{{RESULT_LANE}}</div>
+          </div>
+        </div>
+      </section>
+      <section id="evidence"><h2>截图与证据目录</h2>{{SCREENSHOT_LIST}}<article class="evidence fact" id="E01"><h3>E01｜{{E01_TITLE}}</h3><p>{{E01_TEXT}}</p><p>截图：S01</p></article>{{EVIDENCE_ITEMS}}</section>
+      <section><h2>待用户补充</h2><p>{{USER_INPUT_NEEDED}}</p></section>
+    </main>
+  </div>
+  <script>
+    const buttons=[...document.querySelectorAll('[data-filter]')];
+    buttons.forEach(button=>button.addEventListener('click',()=>{
+      const level=button.dataset.filter;
+      buttons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+      document.querySelectorAll('[data-level]').forEach(item=>item.hidden=level!=='all'&&item.dataset.level!==level);
+    }));
+  </script>
+</body>
+</html>

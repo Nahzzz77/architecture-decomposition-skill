@@ -1,0 +1,4 @@
+interface:
+  display_name: "架构拆解skill"
+  short_description: "基于页面真实证据拆解 AI 产品用户流程、编排机制与产品架构"
+  default_prompt: "使用 $architecture-decomposition 只读拆解这个 AI 产品，并生成证据可追溯的完整 HTML 报告。"
